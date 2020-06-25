@@ -12,25 +12,42 @@ public class GameManager : MonoBehaviour
     public int waveNumber = 1;
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
+    public GameObject titleScreen;
+    public bool gameIsActive = false;
+    private int score;
+
+    public TextMeshProUGUI scoreText;
+
+
 
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
+        
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        enemyCount = FindObjectsOfType<Enemy>().Length;
-        if (enemyCount == 0)
+        if (gameIsActive)
         {
-            waveNumber++;
-            SpawnEnemyWave(waveNumber);
-            SpawnPowerup();
+            enemyCount = FindObjectsOfType<Enemy>().Length;
+            if (enemyCount == 0)
+            {
+                waveNumber++;
+                SpawnEnemyWave(waveNumber);
+                SpawnPowerup();
+            }
         }
+        }
+
+    public void UpdateScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        scoreText.text = "Score: " + score;
     }
 
     public void GameOver()
     {
+        gameIsActive = false;
         RestartGame();
     }
 
@@ -57,5 +74,11 @@ public class GameManager : MonoBehaviour
         float spawnPosX = Random.Range(-spawnRange, spawnRange);
         float spawnPosY = Random.Range(-spawnRange, spawnRange);
         return new Vector3(spawnPosX, 0.5f, spawnPosY);
+    }
+    public void StartGame()
+    {
+        gameIsActive = true;
+        titleScreen.SetActive(false);
+        SpawnEnemyWave(waveNumber);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
 
@@ -17,10 +18,8 @@ public class PlayerController : MonoBehaviour
     private static string verticalString = "Vertical";
     private GameManager gameManager;
     public GameObject powerupIndicator;
-
-
-    // Start is called before the first frame update
     private Rigidbody playerRb;
+
 
     void Start()
     {
@@ -29,22 +28,25 @@ public class PlayerController : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        verticalInput = Input.GetAxis(verticalString);
-        playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed);
-
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if (gameManager.gameIsActive)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false;
-        }
+            verticalInput = Input.GetAxis(verticalString);
+            playerRb.AddForce(focalPoint.transform.forward * verticalInput * speed);
 
-            if (transform.position.y < -10)
-        {
-            gameManager.GameOver();
+            if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+            {
+                playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isOnGround = false;
+            }
+
+                if (transform.position.y < -10)
+            {
+                gameManager.GameOver();
+            }
         }
+        
     }
     private void LateUpdate()
     {
