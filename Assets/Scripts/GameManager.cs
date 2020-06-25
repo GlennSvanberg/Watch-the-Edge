@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private float spawnRange = 7;
+    private float spawnRange = 6;
     public int enemyCount;
     public int waveNumber = 1;
     public GameObject enemyPrefab;
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject titleScreen;
     public bool gameIsActive = false;
     private int score;
-
+    public int difficulty;
     public TextMeshProUGUI scoreText;
 
 
@@ -75,8 +75,9 @@ public class GameManager : MonoBehaviour
         float spawnPosY = Random.Range(-spawnRange, spawnRange);
         return new Vector3(spawnPosX, 0.5f, spawnPosY);
     }
-    public void StartGame()
+    public void StartGame(int d)
     {
+        difficulty = d;
         gameIsActive = true;
         titleScreen.SetActive(false);
         SpawnEnemyWave(waveNumber);

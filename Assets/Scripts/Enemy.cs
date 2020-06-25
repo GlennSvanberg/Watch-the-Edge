@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        speed = speed * gameManager.difficulty;
     }
 
     // Update is called once per frame
